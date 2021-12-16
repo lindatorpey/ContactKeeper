@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Contact Keeper</string>
+    <string name="button_addContactkeeper">Add Contact</string>
+    <string name="hint_contactkeeperTitle">Contact Name</string>
+    <string name="hint_contactkeeperAddress">Address</string>
+    <string name="hint_contactkeeperNumber">Number</string>
+    <string name="hint_contactkeeperEmail">Email</string>
 </resources>
