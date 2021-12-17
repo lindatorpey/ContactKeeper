@@ -5,4 +5,9 @@
     <string name="hint_contactkeeperAddress">Address</string>
     <string name="hint_contactkeeperNumber">Number</string>
     <string name="hint_contactkeeperEmail">Email</string>
+    <string name="menu_addContactKeeper">Add</string>
+    <string name="menu_cancelContactkeeper">Cancel</string>
+    <string name="enter_contactkeeper_title">Please enter Contact Information</string>
+    <string name="save_contactkeeper">Save Contact</string>
+    <string name="button_addImage">Add Image</string>
 </resources>
