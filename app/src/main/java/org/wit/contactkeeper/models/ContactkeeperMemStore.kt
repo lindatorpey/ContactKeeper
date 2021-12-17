@@ -29,6 +29,7 @@ class ContactkeeperMemStore : ContactkeeperStore {
             foundContactkeeper.address = contactkeeper.address
             foundContactkeeper.number = contactkeeper.number
             foundContactkeeper.email = contactkeeper.email
+            foundContactkeeper.image = contactkeeper.image
             logAll()
         }
     }

@@ -3,6 +3,7 @@ package org.wit.contactkeeper.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import org.wit.contactkeeper.databinding.CardContactkeeperBinding
 import org.wit.contactkeeper.models.ContactkeeperModel
 
@@ -31,6 +32,7 @@ class ContactkeeperAdapter constructor(private var contactkeepers: List<Contactk
         fun bind(contactkeeper: ContactkeeperModel, listener: ContactkeeperListener) {
             binding.contactkeeperTitle.text = contactkeeper.title
             binding.description.text = contactkeeper.address
+            Picasso.get().load(contactkeeper.image).resize(200,200).into(binding.imageIcon)
             binding.root.setOnClickListener { listener.onContactkeeperClick(contactkeeper) }
         }
     }
