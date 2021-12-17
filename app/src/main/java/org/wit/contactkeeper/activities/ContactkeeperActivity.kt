@@ -10,14 +10,21 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 import com.github.ajalt.timberkt.Timber
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.model.Marker
 import com.google.android.material.snackbar.Snackbar
+import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.Picasso
 import org.wit.contactkeeper.R
 import org.wit.contactkeeper.databinding.ActivityContactkeeperBinding
-import org.wit.contactkeeper.helpers.showImagePicker
 import org.wit.contactkeeper.main.MainApp
+import org.wit.contactkeeper.helpers.showImagePicker
+//import org.wit.contactkeeper.models.Location
 import org.wit.contactkeeper.models.ContactkeeperModel
+import org.wit.contactkeeper.models.Location
+//import org.wit.contactkeeper.showImagePicker
 import timber.log.Timber.i
+
 
 class ContactkeeperActivity : AppCompatActivity() {
 
@@ -25,6 +32,8 @@ class ContactkeeperActivity : AppCompatActivity() {
     var contactkeeper = ContactkeeperModel()
     lateinit var app: MainApp
     private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
+    private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
+    var location = Location(52.245696, -7.139102, 15f)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,6 +62,7 @@ class ContactkeeperActivity : AppCompatActivity() {
             if (contactkeeper.image != Uri.EMPTY){
                 binding.chooseImage.setText(R.string.change_contactkeeper_image)
             }
+
         }
 
         binding.btnAdd.setOnClickListener() {
@@ -76,7 +86,14 @@ class ContactkeeperActivity : AppCompatActivity() {
         binding.chooseImage.setOnClickListener {
             showImagePicker(imageIntentLauncher)
         }
+        binding.contactkeeperLocation.setOnClickListener {
+            //val location = Location(52.245696, -7.139102, 15f)
+            val launcherIntent = Intent(this, MapActivity::class.java)
+                .putExtra("location", location)
+            mapIntentLauncher.launch(launcherIntent)
+        }
         registerImagePickerCallback()
+        registerMapCallback()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -109,6 +126,22 @@ class ContactkeeperActivity : AppCompatActivity() {
                         } // end of if
                     }
                     RESULT_CANCELED -> { } else -> { }
+                }
+            }
+    }
+    private fun registerMapCallback() {
+        mapIntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+            {result ->
+                when (result.resultCode){
+                    RESULT_OK -> {
+                        if (result.data != null){
+                            i("Got Location ${result.data.toString()}")
+                            location = result.data!!.extras?.getParcelable("location")!!
+                            i("Location == $location")
+                        }
+                    }
+                   RESULT_CANCELED -> {} else -> {}
                 }
             }
     }
